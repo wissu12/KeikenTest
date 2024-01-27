@@ -204,42 +204,42 @@
         // Appelez votre nouvelle fonction pour obtenir les activités de GPT-3 ici
         getActivitiesFromGPT3(address, currentDateTime, temperatureCelsius, description);
     }
-async function getActivitiesFromGPT3(address, currentDateTime, temperatureCelsius, description) {
-    const apiKey2 = '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';
-    const apiUrl = 'https://api.openai.com/v1/chat/completions';
+    async function getActivitiesFromGPT3(address, currentDateTime, temperatureCelsius, description) {
+        const apiKey2 = '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';
+        const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
-    const headers = {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey2}`,
-    };
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey2}`,
+        };
 
-    const requestData = {
-        model: 'gpt-3.5-turbo',
-        messages: [
-           { role: 'user', content: `List activities near the address${address} with ${description} weather
-           on ${currentDateTime} without  introduction and details. Provide activity suggestions with their respective locations in square brackets,
-           with mentioning latitude and longitude, For example, suggest a location for hiking ,go to  coffe or any other activity.
-            also I want the activities and locations to be very close to the address,
-             for example, go to the cafe beautiful view Beni mellal [34.6780,-6.678]. The location must be in square brackets` },
+        const requestData = {
+            model: 'gpt-3.5-turbo',
+            messages: [
+               { role: 'user', content: `List activities near the address${address} with ${description} weather
+               on ${currentDateTime} without  introduction and details. Provide activity suggestions with their respective locations in square brackets,
+               with mentioning latitude and longitude, For example, suggest a location for hiking ,go to  coffe or any other activity.
+                also I want the activities and locations to be very close to the address,
+                 for example, go to the cafe beautiful view Beni mellal [34.6780,-6.678]. The location must be in square brackets` },
 
-        ],
-    };
+            ],
+        };
 
-    try {
-        const response = await axios.post(apiUrl, requestData, { headers });
-        activitySuggestions = response.data.choices[0].message.content.split('\n').filter(Boolean);
+        try {
+            const response = await axios.post(apiUrl, requestData, { headers });
+            activitySuggestions = response.data.choices[0].message.content.split('\n').filter(Boolean);
 
-        // Affichez la première suggestion d'activité sur la page HTML
-        showCurrentActivity();
+            // Affichez la première suggestion d'activité sur la page HTML
+            showCurrentActivity();
 
-        // Affichez les boutons une fois que les activités sont chargées
-        document.getElementById('activityContainer').style.display = 'block';
-    } catch (error) {
-        console.error('Error generating activities:', error);
+            // Affichez les boutons une fois que les activités sont chargées
+            document.getElementById('activityContainer').style.display = 'block';
+        } catch (error) {
+            console.error('Error generating activities:', error);
+        }
     }
-}
     async function getActivitiesFromGPT32(address, currentDateTime, temperatureCelsius, description) {
-        const apiKey2 = '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';
+        const apiKey2 = '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';
         const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
         const headers = {
@@ -276,12 +276,42 @@ async function getActivitiesFromGPT3(address, currentDateTime, temperatureCelsiu
     }
 
     function showNextActivity() {
-        currentActivityIndex = (currentActivityIndex + 1) % activitySuggestions.length;
-        showCurrentActivity();
-    }
-    // ... votre code existant ...
+        currentActivityIndex++;
 
- function validateActivity2() {
+        if (currentActivityIndex >= activitySuggestions.length) {
+            // Si l'utilisateur est à la dernière activité, affichez la carte
+            showMap();
+        } else {
+            showCurrentActivity();
+        }
+    }
+
+    async function showMap() {
+        const lastActivity = activitySuggestions[activitySuggestions.length - 1];
+        const locationMatch = lastActivity.match(/\[(.*?)\]/);
+        const location = locationMatch ? locationMatch[1] : '';
+
+        // Call a function to update the map with the last location
+        await updateMapWithLocation(location);
+
+        // Affichez la carte et masquez les boutons "Next" et "Done"
+        document.getElementById('map').style.display = 'block';
+        document.getElementById('activityContainer').style.display = 'none';
+    }
+
+    function showNextActivity2() {
+        currentActivityIndex++;
+
+        if (currentActivityIndex >= activitySuggestions.length) {
+            // If the index exceeds the length of the suggestions array, disable the "Next" button
+            document.getElementById('activityContainer').style.display = 'none';
+        } else {
+            showCurrentActivity();
+        }
+    }
+
+
+    async function validateActivity() {
         const activity = activitySuggestions[currentActivityIndex];
 
         // You can extract the location from the activity (assuming it's in square brackets)
@@ -289,21 +319,11 @@ async function getActivitiesFromGPT3(address, currentDateTime, temperatureCelsiu
         const location = locationMatch ? locationMatch[1] : '';
 
         // Call a function to update the map with the new location
-        updateMapWithLocation(location);
+        await updateMapWithLocation(location);
+
+        // Hide the "Next Activity" and "Done" buttons after displaying the map
+        document.getElementById('activityContainer').style.display = 'none';
     }
-    async function validateActivity() {
-    const activity = activitySuggestions[currentActivityIndex];
-
-    // You can extract the location from the activity (assuming it's in square brackets)
-    const locationMatch = activity.match(/\[(.*?)\]/);
-    const location = locationMatch ? locationMatch[1] : '';
-
-    // Call a function to update the map with the new location
-    await updateMapWithLocation(location);
-
-    // Hide the "Next Activity" and "Done" buttons after displaying the map
-    document.getElementById('activityContainer').style.display = 'none';
-}
 
 
     async function updateMapWithLocation(location) {
@@ -331,7 +351,7 @@ async function getActivitiesFromGPT3(address, currentDateTime, temperatureCelsiu
         }
     }
 
-    getLocation();  // Appeler getLocation lors du charg
+    getLocation();
 </script>
 
 
