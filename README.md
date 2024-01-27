@@ -3,6 +3,8 @@ J'ai utilisé Spring Boot pour développer l'application du test numéro 2.
 
 Pour tester l'application, veuillez télécharger IntelliJ IDEA et assurez-vous d'avoir Java 17 installé.
 
+Pour exécuter le code source, veuillez ouvrir le dossier "keiken" situé dans le répertoire "CodeSource" sur IntelliJ IDEA  .
+
 Il y a un problème avec l'API key de GPT-3. Après avoir mis le code source sur GitHub, GPT-3 m'a envoyé un mail indiquant que je dois pas partager l'API key en ligne, comme sur GitHub.
 
 Si le projet ne fonctionne pas au niveau des suggestions de GPT-3, merci de m'envoyer un message pour que je retire le projet de GitHub. Après cela, cela devrait fonctionner. J'ai déjà testé cette procédure.
