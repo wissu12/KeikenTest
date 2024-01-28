@@ -23,4 +23,4 @@ Si vous choisissez une activité et cliquez sur "Done", la carte sera affichée 
 
 Lorsque vous atteignez la dernière proposition et que vous cliquez sur "Next", la carte sera affichée automatiquement, car il n'y a pas d'autre proposition disponible.
 
-Je vais laisser une vidéo pour que vous sachiez comment naviguer dans l'application, ainsi qu'une capture d'écran concernant le mail que j'ai reçu de la part de GPT-3. Vous trouverez ces fichiers dans le dossier "files".
+Je vais laisser une vidéo pour que vous sachiez comment naviguer dans l'application dans le drive du lien suivant : https://drive.google.com/drive/folders/14SHBoEv8RBgBGVKXZB6B8cRUqPHJsYZo?usp=sharing, ainsi qu'une capture d'écran concernant le mail que j'ai reçu de la part de GPT-3  dans le dossier "files".
